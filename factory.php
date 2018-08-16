@@ -59,7 +59,7 @@ class Factory {
 	 */
 	public function __call($name, $args = null) {
 		$method = 'create'.ucfirst($name);
-		return method_exists($this, $method)? ((empty($args) || !is_array($args))? $this->{$method}() : $this->{$method}(...$args)) : null;
+		return method_exists($this, $method)? ((empty($args) || !is_array($args))? $this->{$method}() : call_user_func_array([$this, $method], $args)) : null;
 	}
 
 
