@@ -13,11 +13,6 @@ class Plugin {
 
 
 
-	// Properties
-	// ---------------------------------------------------------------------------------------------------
-
-
-
 	/**
 	 * Basic plugin data
 	 */
@@ -26,11 +21,6 @@ class Plugin {
 	private $prefix;
 	private $version;
 	private $packageNamespace;
-
-
-
-	// Initialization
-	// ---------------------------------------------------------------------------------------------------
 
 
 
@@ -49,11 +39,6 @@ class Plugin {
 		$this->prefix 	= constant($this->packageNamespace.'PREFIX');
 		$this->version 	= constant($this->packageNamespace.'VERSION');
 	}
-
-
-
-	// Methods
-	// ---------------------------------------------------------------------------------------------------
 
 
 

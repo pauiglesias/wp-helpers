@@ -4,17 +4,12 @@
 namespace Vendor\Plugin\Helpers;
 
 /**
- * AutoLoader class
+ * AutoLoad class
  *
  * @package WordPress Plugin
  * @subpackage Helpers
  */
 final class Autoload {
-
-
-
-	// Properties
-	// ---------------------------------------------------------------------------------------------------
 
 
 
@@ -47,23 +42,20 @@ final class Autoload {
 
 
 
-	// Initialization
-	// ---------------------------------------------------------------------------------------------------
-
-
-
 	/**
 	 * Create instance and try to load the class
 	 */
 	public static function register($name = null) {
 
 		// Check instance
-		if (!isset(self::$instance))
+		if (!isset(self::$instance)) {
 			self::$instance = new self;
+		}
 
 		// Check request
-		if (!empty($name))
+		if (!empty($name)) {
 			self::$instance->load($name);
+		}
 	}
 
 
@@ -75,8 +67,9 @@ final class Autoload {
 
 		// Split current namespace
 		$namespace = explode('\\', __NAMESPACE__);
-		if (count($namespace) < 2)
+		if (count($namespace) < 2) {
 			return;
+		}
 
 		// Vendor and package values
 		$this->vendor = $namespace[0];
@@ -92,38 +85,37 @@ final class Autoload {
 
 
 
-	// Methods
-	// ---------------------------------------------------------------------------------------------------
-
-
-
 	/**
 	 * Load by namespace
 	 */
 	public function load($name) {
 
 		// Check plugin path
-		if (!isset($this->root))
+		if (!isset($this->root)) {
 			return;
+		}
 
 		// Check vendor
 		$namespace = explode('\\', $name);
-		if ($this->vendor != $namespace[0])
+		if ($this->vendor != $namespace[0]) {
 			return;
+		}
 
 		// Remove vendor
 		array_shift($namespace);
 
 		// Check package
-		if ($this->package == $namespace[0])
+		if ($this->package == $namespace[0]) {
 			array_shift($namespace);
+		}
 
 		// Load associated file
 		$path = $this->root.'/'.implode('/', str_replace('_', '-', array_map('strtolower', $namespace))).'.php';
 		if (!in_array($path, $this->loaded)) {
 			$this->loaded[] = $path;
-			if (file_exists($path))
+			if (file_exists($path)) {
 				require_once $path;
+			}
 		}
 	}
 
@@ -132,4 +124,4 @@ final class Autoload {
 }
 
 // Autoload in throw exceptions mode
-spl_autoload_register(__NAMESPACE__.'\Loader::register', true);
+spl_autoload_register(__NAMESPACE__.'\Autoload::register', true);

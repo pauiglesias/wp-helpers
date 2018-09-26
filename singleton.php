@@ -13,20 +13,10 @@ abstract class Singleton {
 
 
 
-	// Properties
-	// ---------------------------------------------------------------------------------------------------
-
-
-
 	/**
 	 * Plugin object
 	 */
 	protected $plugin;
-
-
-
-	// Initialization
-	// ---------------------------------------------------------------------------------------------------
 
 
 
@@ -39,8 +29,9 @@ abstract class Singleton {
 		static $instance = null;
 
 		// Check instance
-		if (!isset($instance))
+		if (!isset($instance)) {
 			$instance = new static($plugin);
+		}
 
 		// Done
 		return $instance;
