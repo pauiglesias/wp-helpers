@@ -5,12 +5,12 @@ namespace MicroDeploy\Package\Helpers;
 use \MicroDeploy\Package as Root;
 
 /**
- * Prefix class
+ * Util class
  *
  * @package WordPress
  * @subpackage Helpers
  */
-class Prefix {
+class Util {
 
 
 
