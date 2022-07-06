@@ -7,7 +7,7 @@ use \MicroDeploy\Package\Helpers\Singleton;
 /**
  * Core class
  *
- * @package Helpers
+ * @package WP-Helpers
  * @subpackage Core
  */
 final class Core extends Singleton {

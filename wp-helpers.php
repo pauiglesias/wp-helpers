@@ -1,20 +1,30 @@
 <?php
-/*
-Plugin Name: GTR - Reports Content Client
-Plugin URI: http://www.grupotecmared.es
-Description: Reports Content Client
-Version: 1.0.0
-Author: Pau Iglesias
-License: GPL3
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
-*/
+
+/**
+ *
+ * Plugin Name:       Package Name
+ * Plugin URI:        https://microdeploy.com
+ * Description:       Package description
+ * Version:           1.0.0
+ *
+ * Author:            MicroDeploy
+ * Author URI:        https://microdeploy.com
+ *
+ * License:           GPL-2.0+
+ * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ *
+ * Text Domain:       mdwphl
+ *
+ * @package Package Name
+ * @author  Pau Iglesias <pau@microdeploy.com>
+ */
 
 namespace MicroDeploy\Package;
 
 defined('ABSPATH') || die;
 
 const FILE 		= __FILE__;
-const PREFIX 	= 'wphlpr';
+const PREFIX 	= 'mdwphl';
 const VERSION 	= '1.0.0';
 const DEBUG		= false;
 
