@@ -46,10 +46,13 @@ class Log {
 	 * Set or get the debugging mode
 	 */
 	public static function debugging($value = null) {
+
 		static $active;
 		if (isset($value)) {
 			$active = $value;
+			return $active;
 		}
+
 		return isset($active) ? $active : Module::debug();
 	}
 
