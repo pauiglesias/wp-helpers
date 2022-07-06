@@ -53,22 +53,18 @@ class Util {
 	 */
 	public static function escAttr($names, $echo = true, $join = '-') {
 
-		if (!is_array($names)) {
-			$names = [$names];
-		}
+		$attrs = is_array($names) ? $names : [$names];
 
 		$values = [];
-		foreach ($names as $name) {
-			$values[] = esc_attr(self::prefix().$join.$name);
+		foreach ($attrs as $attr) {
+			$values[] = esc_attr(self::prefix().$join.$attr);
 		}
-
-		$attrs = implode(' ', $values);
 
 		if ($echo) {
-			echo $attrs;
+			echo implode(' ', $values);
 		}
 
-		return $attrs;
+		return is_array($names) ? $values : $names[0];
 	}
 
 
@@ -103,7 +99,7 @@ class Util {
 	/**
 	 * Retrieve a post data via prefix
 	 */
-	public static function post($name, $join = '_') {
+	public static function postParam($name, $join = '_') {
 		$var = self::prefix().$join.$name;
 		return isset($_POST[$var]) ? $_POST[$var] : null;
 	}
@@ -116,7 +112,7 @@ class Util {
 	public static function posts($names, $join = '_') {
 		$posts = [];
 		foreach ($names as $name) {
-			$posts[$name] = self::post($name, $join);
+			$posts[$name] = self::postParam($name, $join);
 		}
 		return $posts;
 	}
@@ -167,8 +163,8 @@ class Util {
 	/**
 	 * Protects the current key as a prefix
 	 */
-	public static function metaProtected($join = '_', $extended = '') {
-		$values = self::metaProtectedValues($extended);
+	public static function metaProtected($value) {
+		$values = self::metaProtectedValues($value);
 		if (1 == count($values)) {
 			add_filter('is_protected_meta', [__CLASS__, 'metaProtectedFilter'], PHP_INT_MAX, 2);
 		}
