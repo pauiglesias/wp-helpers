@@ -2,8 +2,6 @@
 
 namespace MicroDeploy\Package\Helpers;
 
-use \MicroDeploy\Package as Root;
-
 /**
  * Util class
  *
@@ -22,19 +20,10 @@ class Util {
 
 
 	/**
-	 * Return current prefix
-	 */
-	public static function prefix() {
-		return Root\PREFIX;
-	}
-
-
-
-	/**
 	 * Basic name composition without escaping
 	 */
 	public static function key($name, $join = '_') {
-		return self::prefix().$join.$name;
+		return Module::prefix().$join.$name;
 	}
 
 
@@ -57,7 +46,7 @@ class Util {
 
 		$values = [];
 		foreach ($attrs as $attr) {
-			$values[] = esc_attr(self::prefix().$join.$attr);
+			$values[] = esc_attr(Module::prefix().$join.$attr);
 		}
 
 		if ($echo) {
@@ -100,7 +89,7 @@ class Util {
 	 * Retrieve a post data via prefix
 	 */
 	public static function postParam($name, $join = '_') {
-		$var = self::prefix().$join.$name;
+		$var = Module::prefix().$join.$name;
 		return isset($_POST[$var]) ? $_POST[$var] : null;
 	}
 
@@ -123,7 +112,7 @@ class Util {
 	 * Retrieve a Url GET data
 	 */
 	public static function getParam($name, $join = '_') {
-		$var = self::prefix().$join.$name;
+		$var = Module::prefix().$join.$name;
 		return isset($_GET[$var]) ? $_GET[$var] : null;
 	}
 
@@ -146,7 +135,7 @@ class Util {
 	 * Retrieve meta value
 	 */
 	public static function meta($postId, $name, $single = true, $join = '_') {
-		return get_post_meta($postId, self::prefix().$join.$name, $single);
+		return get_post_meta($postId, Module::prefix().$join.$name, $single);
 	}
 
 
@@ -155,7 +144,7 @@ class Util {
 	 * Updates a meta value
 	 */
 	public static function metaUpdate($postId, $name, $value, $join = '_') {
-		return update_post_meta($postId, self::prefix().$join.$name, $value);
+		return update_post_meta($postId, Module::prefix().$join.$name, $value);
 	}
 
 
@@ -234,7 +223,7 @@ class Util {
 	 * Retrieves a single option
 	 */
 	public static function option($name, $default = false, $join = '_') {
-		return get_option(self::prefix().$join.$name, $default);
+		return get_option(Module::prefix().$join.$name, $default);
 	}
 
 
@@ -243,7 +232,7 @@ class Util {
 	 * Update a single option
 	 */
 	public static function optionUpdate($name, $value, $autoload = null, $join = '_') {
-		return update_option(self::prefix().$join.$name, $value, $autoload);
+		return update_option(Module::prefix().$join.$name, $value, $autoload);
 	}
 
 
