@@ -57,6 +57,15 @@ class Cron extends Singleton {
 
 
 	/**
+	 * Triggers the scheduled action
+	 */
+	private function action() {
+		add_action($this->actionKey(), $this->config['callback']);
+	}
+
+
+
+	/**
 	 * Minute schedule
 	 */
 	private function schedules() {
@@ -67,15 +76,6 @@ class Cron extends Singleton {
 			];
 			return $schedules;
 		});
-	}
-
-
-
-	/**
-	 * Triggers the scheduled action
-	 */
-	private function action() {
-		add_action($this->actionKey(), $this->config['callback']);
 	}
 
 
