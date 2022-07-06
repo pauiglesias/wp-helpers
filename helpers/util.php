@@ -17,7 +17,7 @@ class Util {
 	/**
 	 * Meta key protection
 	 */
-	private static $metaProtectedValue;
+	private static $metaProtectedValues = [];
 
 
 
@@ -168,19 +168,42 @@ class Util {
 	 * Protects the current key as a prefix
 	 */
 	public static function metaProtected($join = '_', $extended = '') {
-		self::$metaProtectedValue = self::prefix().$join.$extended;
-		add_filter('is_protected_meta', function($protected, $metaKey) {
-			return false !== stripos($metaKey, Prefix::metaProtectedValue()) ? true : $protected;
-		}, PHP_INT_MAX, 2);
+		$values = self::metaProtectedValues($extended);
+		if (1 == count($values)) {
+			add_filter('is_protected_meta', [__CLASS__, 'metaProtectedFilter'], PHP_INT_MAX, 2);
+		}
 	}
 
 
 
 	/**
-	 * Retrieve the current metaprotected value
+	 * Filters the meta protected value
 	 */
-	public static function metaProtectedValue() {
-		return self::$metaProtectedValue;
+	public static function metaProtectedFilter($protected, $metaKey) {
+		foreach (self::metaProtectedValues() as $value) {
+			if (0 === stripos($metaKey, $value)) {
+				return true;
+			}
+		}
+		return $protected;
+	}
+
+
+
+	/**
+	 * Retrieve the current metaprotected values
+	 */
+	public static function metaProtectedValues($value = null) {
+
+		if (!isset($value)) {
+			return self::$metaProtectedValues;
+		}
+
+		if (!in_array($value, self::$metaProtectedValues)) {
+			self::$metaProtectedValues[] = $value;
+		}
+
+		return self::$metaProtectedValues;
 	}
 
 
