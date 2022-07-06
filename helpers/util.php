@@ -2,7 +2,7 @@
 
 namespace MicroDeploy\Package\Helpers;
 
-use \GrupoTecmaRed\ReportsContent as Plugin;
+use \MicroDeploy\Package as Root;
 
 /**
  * Prefix class
@@ -24,8 +24,8 @@ class Prefix {
 	/**
 	 * Return current prefix
 	 */
-	public static function val() {
-		return Plugin\PREFIX;
+	public static function prefix() {
+		return Root\PREFIX;
 	}
 
 
@@ -34,7 +34,7 @@ class Prefix {
 	 * Basic name composition without escaping
 	 */
 	public static function key($name, $join = '_') {
-		return Plugin\PREFIX.$join.$name;
+		return self::prefix().$join.$name;
 	}
 
 
@@ -59,7 +59,7 @@ class Prefix {
 
 		$values = [];
 		foreach ($names as $name) {
-			$values[] = esc_attr(Plugin\PREFIX.$join.$name);
+			$values[] = esc_attr(self::prefix().$join.$name);
 		}
 
 		$attrs = implode(' ', $values);
@@ -104,7 +104,7 @@ class Prefix {
 	 * Retrieve a post data via prefix
 	 */
 	public static function post($name, $join = '_') {
-		$var = Plugin\PREFIX.$join.$name;
+		$var = self::prefix().$join.$name;
 		return isset($_POST[$var]) ? $_POST[$var] : null;
 	}
 
@@ -127,7 +127,7 @@ class Prefix {
 	 * Retrieve a Url GET data
 	 */
 	public static function getParam($name, $join = '_') {
-		$var = Plugin\PREFIX.$join.$name;
+		$var = self::prefix().$join.$name;
 		return isset($_GET[$var]) ? $_GET[$var] : null;
 	}
 
@@ -150,7 +150,7 @@ class Prefix {
 	 * Retrieve meta value
 	 */
 	public static function meta($postId, $name, $single = true, $join = '_') {
-		return get_post_meta($postId, Plugin\PREFIX.$join.$name, $single);
+		return get_post_meta($postId, self::prefix().$join.$name, $single);
 	}
 
 
@@ -159,7 +159,7 @@ class Prefix {
 	 * Updates a meta value
 	 */
 	public static function metaUpdate($postId, $name, $value, $join = '_') {
-		return update_post_meta($postId, Plugin\PREFIX.$join.$name, $value);
+		return update_post_meta($postId, self::prefix().$join.$name, $value);
 	}
 
 
@@ -168,7 +168,7 @@ class Prefix {
 	 * Protects the current key as a prefix
 	 */
 	public static function metaProtected($join = '_', $extended = '') {
-		self::$metaProtectedValue = Plugin\PREFIX.$join.$extended;
+		self::$metaProtectedValue = self::prefix().$join.$extended;
 		add_filter('is_protected_meta', function($protected, $metaKey) {
 			return false !== stripos($metaKey, Prefix::metaProtectedValue()) ? true : $protected;
 		}, PHP_INT_MAX, 2);
@@ -215,7 +215,7 @@ class Prefix {
 	 * Retrieves a single option
 	 */
 	public static function option($name, $default = false, $join = '_') {
-		return get_option(Plugin\PREFIX.$join.$name, $default);
+		return get_option(self::prefix().$join.$name, $default);
 	}
 
 
@@ -224,7 +224,7 @@ class Prefix {
 	 * Update a single option
 	 */
 	public static function optionUpdate($name, $value, $autoload = null, $join = '_') {
-		return update_option(Plugin\PREFIX.$join.$name, $value, $autoload);
+		return update_option(self::prefix().$join.$name, $value, $autoload);
 	}
 
 
