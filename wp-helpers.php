@@ -13,9 +13,10 @@ namespace MicroDeploy\Package;
 
 defined('ABSPATH') || die;
 
-const FILE = __FILE__;
-const PREFIX = 'gtrrcc';
-const VERSION = '1.0.0';
+const FILE 		= __FILE__;
+const PREFIX 	= 'wphlpr';
+const VERSION 	= '1.0.0';
+const DEBUG		= false;
 
 require_once dirname(FILE).'/helpers/autoload.php';
 
