@@ -53,7 +53,7 @@ class Util {
 			echo implode(' ', $values);
 		}
 
-		return is_array($names) ? $values : $names[0];
+		return is_array($names) ? $values : $values[0];
 	}
 
 
