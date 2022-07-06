@@ -12,7 +12,10 @@ class Log {
 
 
 
-	public static function error($value, $before = '') {
+	/**
+	 * Send an error to the error log
+	 */
+	public static function error($value, $before = '', $split = ': ') {
 
 		$content = $value;
 
@@ -23,7 +26,18 @@ class Log {
 			$content = print_r($content, true);
 		}
 
-		error_log($before.('' === $before ? '' : ': ').$content);
+		error_log($before.('' === $before ? '' : $split).$content);
+	}
+
+
+
+	/**
+	 * Log only on debugging mode
+	 */
+	public static function debug($value, $before = '', $split = ': ') {
+		if (self::debugging()) {
+			self::error($value, $before, $split);
+		}
 	}
 
 
@@ -36,18 +50,7 @@ class Log {
 		if (isset($value)) {
 			$active = $value;
 		}
-		return isset($active) ? $active : false;
-	}
-
-
-
-	/**
-	 * Log only on debugguing mode
-	 */
-	public static function debug($value, $before = '') {
-		if (self::debugging()) {
-			self::error($value, $before);
-		}
+		return isset($active) ? $active : Module::debug();
 	}
 
 
