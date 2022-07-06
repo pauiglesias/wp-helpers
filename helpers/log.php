@@ -28,4 +28,28 @@ class Log {
 
 
 
+	/**
+	 * Set or get the debugging mode
+	 */
+	public static function debugging($value = null) {
+		static $active;
+		if (isset($value)) {
+			$active = $value;
+		}
+		return isset($active) ? $active : false;
+	}
+
+
+
+	/**
+	 * Log only on debugguing mode
+	 */
+	public static function debug($value, $before = '') {
+		if (self::debugging()) {
+			self::error($value, $before);
+		}
+	}
+
+
+
 }
