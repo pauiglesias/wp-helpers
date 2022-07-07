@@ -46,10 +46,22 @@ class Timer {
 
 	/**
 	 * Seconds from started
+	 *
+	 * @param int   		$precision The number of digits from the right of the decimal to display.
+ 	 *						Default 3.
+	 *
+	 * @return int|float 	The seconds finished time calculation.
 	 */
-	public function seconds() {
+	public function seconds($precision = 0) {
+
 		$this->ended = microtime(true);
-		return (int) ($this->ended - $this->started);
+		$total = $this->ended - $this->started;
+
+		if (empty($precision)) {
+			return (int) $total;
+		}
+
+		return (float) number_format($total, $precision);
 	}
 
 
