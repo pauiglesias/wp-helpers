@@ -43,7 +43,7 @@ class Log {
 
 
 	/**
-	 * Checks wheter is running in dev mode
+	 * Log only whether is running in dev mode
 	 */
 	public static function dev($value, $before = '', $split = ': ') {
 		if (Module::dev()) {
@@ -54,7 +54,7 @@ class Log {
 
 
 	/**
-	 * Log only on debugging mode
+	 * Log only in debugging mode
 	 */
 	public static function debug($value, $before = '', $split = ': ') {
 		if (self::debugging()) {
