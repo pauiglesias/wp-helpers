@@ -32,6 +32,17 @@ class Log {
 
 
 	/**
+	 * Log only whether is under debug or dev mode
+	 */
+	public static function debugOrDev($value, $before = '', $split = ': ') {
+		if (Module::dev() || self::debugging()) {
+			self::error($value, $before, $split);
+		}
+	}
+
+
+
+	/**
 	 * Checks wheter is running in dev mode
 	 */
 	public static function dev($value, $before = '', $split = ': ') {
