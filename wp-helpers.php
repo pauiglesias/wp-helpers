@@ -3,9 +3,10 @@
 /**
  *
  * Plugin Name:       Package Name
- * Plugin URI:        https://microdeploy.com
  * Description:       Package description
+ *
  * Version:           1.0.0
+ * Plugin URI:        https://microdeploy.com
  *
  * Author:            MicroDeploy
  * Author URI:        https://microdeploy.com
@@ -17,6 +18,7 @@
  *
  * @package Package Name
  * @author  Pau Iglesias <pau@microdeploy.com>
+ *
  */
 
 namespace MicroDeploy\Package;
