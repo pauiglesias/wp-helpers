@@ -53,6 +53,15 @@ class Module {
 	/**
 	 * Constant
 	 */
+	public static function dev() {
+		return Root\DEV;
+	}
+
+
+
+	/**
+	 * Constant
+	 */
 	public static function debug() {
 		return Root\DEBUG;
 	}

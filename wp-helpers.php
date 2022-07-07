@@ -28,6 +28,8 @@ defined('ABSPATH') || die;
 const FILE 		= __FILE__;
 const PREFIX 	= 'mdwphl';
 const VERSION 	= '1.0.0';
+
+const DEV		= false;
 const DEBUG		= false;
 
 require_once dirname(FILE).'/helpers/autoload.php';
