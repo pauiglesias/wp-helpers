@@ -39,7 +39,7 @@ class Cron {
 			'secondsOffset'	=> 30,
 			'actionKey'		=> '',
 			'scheduleKey'	=> '',
-			'callable'		=> null,
+			'callback'		=> null,
 		]);
 	}
 
