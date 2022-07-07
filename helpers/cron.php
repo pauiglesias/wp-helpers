@@ -8,7 +8,7 @@ namespace MicroDeploy\Package\Helpers;
  * @package WordPress
  * @subpackage Helpers
  */
-class Cron extends Singleton {
+class Cron {
 
 
 
@@ -22,7 +22,7 @@ class Cron extends Singleton {
 	/**
 	 * Constructor
 	 */
-	protected function __construct($args) {
+	public function __construct($args) {
 		$this->init($args);
 		$this->start();
 	}
