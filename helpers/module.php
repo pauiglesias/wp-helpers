@@ -69,7 +69,7 @@ class Module {
 
 
 	/**
-	 * Plugin directory
+	 * Package directory
 	 */
 	public static function dir() {
 
