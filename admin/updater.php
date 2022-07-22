@@ -66,6 +66,9 @@ final class Updater extends Singleton {
 
 
 
+	/**
+	 * Check if the post is maybe empty to avoid data lost
+	 */
 	public function maybeEmpty($maybeEmpty, $postarr) {
 
 		if (null === Util::postParam('post_nonce') ||
