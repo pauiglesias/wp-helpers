@@ -37,7 +37,7 @@ final class Admin extends Singleton {
 	 */
 	private function menus() {
 		add_action('admin_menu', function() {
-			$this->settingsHook = add_submenu_page('options-general.php', 'Settings Page', 'Settings Page', 'publish_posts', $this->settingsKey(), [$this, 'settingsDisplay']);
+			$this->settingsHook = add_submenu_page('options-general.php', 'Settings Page', 'Settings Page', $this->settingsCapability(), $this->settingsKey(), [$this, 'settingsDisplay']);
 		});
 	}
 
@@ -78,9 +78,18 @@ final class Admin extends Singleton {
 
 
 	/**
+	 * Decides menu capability
+	 */
+	private function settingsCapability() {
+		return 'publish_posts';
+	}
+
+
+
+	/**
 	 * Compose the page prefix
 	 */
-	public function settingsKey() {
+	private function settingsKey() {
 		return Util::key('settings');
 	}
 
