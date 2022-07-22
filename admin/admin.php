@@ -29,6 +29,7 @@ final class Admin extends Singleton {
 		$this->menus();
 		$this->screen();
 		$this->columns();
+		$this->postLoad();
 	}
 
 
@@ -93,7 +94,7 @@ final class Admin extends Singleton {
 	 */
 	public function columnsHead($columns, $postType) {
 
-		if ('myPostType' == $postType) {
+		if ('my_post_type' == $postType) {
 			return Columns::instance()->columnsHead($columns);
 		}
 
@@ -110,6 +111,68 @@ final class Admin extends Singleton {
 		if (0 === strpos($columnName, Util::key(''))) {
 			Columns::instance()->columnsBody($columnName, $postId);
 		}
+	}
+
+
+
+	/**
+	 * Metabox actions
+	 */
+	private function postLoad() {
+		add_action('load-post.php', [$this, 'postEdit']);
+		add_action('load-post-new.php', [$this, 'postEdit']);
+		//add_action('in_admin_header', [$this, 'notices']);
+	}
+
+
+
+	/**
+	 * Post edition context
+	 */
+	public function postEdit() {
+		add_action('add_meta_boxes', [$this, 'postMetaboxes'], 10, 2);
+		add_action('wp_insert_post', [$this, 'postUpdate'], PHP_INT_MAX, 2);
+		add_filter('wp_insert_post_empty_content', [$this, 'postMaybeEmpty'], PHP_INT_MAX, 2);
+	}
+
+
+
+	/**
+	 * Check post type before to add metaboxes
+	 */
+	public function postMetaboxes($postType, $post) {
+		if ('my_post_type' == $postType) {
+			Metabox::instance()->metaboxes($postType, $post);
+		}
+	}
+
+
+
+	/**
+	 * Check post update based on post type
+	 */
+	public function postUpdate($postId, $post) {
+		if ('my_post_type' == $post->post_type) {
+			Updater::instance()->update($postId, $post);
+		}
+	}
+
+
+
+	/**
+	 * Check if the post is maybe empty
+	 */
+	public function postMaybeEmpty($maybeEmpty, $postarr) {
+
+		if (!$maybeEmpty) {
+			return $maybeEmpty;
+		}
+
+		if (!empty($postarr['post_type']) && 'my_post_type' == $postarr['post_type']) {
+			return Updater::instance()->maybeEmpty($maybeEmpty, $postarr);
+		}
+
+		return $maybeEmpty;
 	}
 
 
