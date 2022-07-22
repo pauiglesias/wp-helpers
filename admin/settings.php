@@ -53,6 +53,36 @@ final class Settings extends Singleton {
 	 */
 	public function display() {
 
+		$nonce = esc_attr(wp_create_nonce(Module::file()));
+
+		?><div class="wrap">
+
+			<h1 style="margin-bottom: 25px;">WC STEL Order API</h1>
+
+			<form method="post" style="margin-bottom: 50px;">
+
+				<h2>Section</h2>
+
+				<input type="hidden" name="<?php Util::escAttr_('nonce_settings'); ?>" value="<?php echo $nonce; ?>">
+				<input type="hidden" name="<?php Util::escAttr_('job1'); ?>" value="1">
+
+				<input type="submit" class="button button-primary" value="Save Data">
+
+			</form>
+
+			<form method="post" style="margin-bottom: 50px;">
+
+				<h2>Section 2</h2>
+
+				<input type="hidden" name="<?php Util::escAttr_('nonce_settings'); ?>" value="<?php echo $nonce; ?>">
+				<input type="hidden" name="<?php Util::escAttr_('job2'); ?>" value="1">
+
+				<input type="submit" class="button button-primary" value="Save Data">
+
+			</form>
+
+		</div><?php
+
 	}
 
 
