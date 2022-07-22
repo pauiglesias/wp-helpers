@@ -82,4 +82,43 @@ final class Updater extends Singleton {
 
 
 
+	/**
+	 * Show notices from saved post
+	 */
+	public function notices() {
+
+		if (null !== Util::postParam('post_nonce')) {
+			return;
+		}
+
+		$postId = empty($_GET['post']) ? null : (int) $_GET['post'];
+		if (empty($postId)) {
+			return;
+		}
+
+		$errorDownload = Util::meta($postId, 'product_error_download');
+		if (!empty($errorDownload)) {
+			Notices::error($errorDownload);
+			$this->productError($postId, 'download', '');
+		}
+
+		$errorUpdate = Util::meta($postId, 'product_error_update');
+		if (!empty($errorUpdate)) {
+			Notices::error($errorUpdate);
+			$this->productError($postId, 'update', '');
+		}
+
+	}
+
+
+
+	/**
+	 * Flag if product error is active and set message
+	 */
+	private function productError($postId, $type, $message) {
+		Util::metaUpdate($postId, 'product_error_'.$type, $message);
+	}
+
+
+
 }

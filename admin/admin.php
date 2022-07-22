@@ -121,7 +121,7 @@ final class Admin extends Singleton {
 	private function postLoad() {
 		add_action('load-post.php', [$this, 'postEdit']);
 		add_action('load-post-new.php', [$this, 'postEdit']);
-		//add_action('in_admin_header', [$this, 'notices']);
+		add_action('in_admin_header', [$this, 'postEditNotices']);
 	}
 
 
@@ -173,6 +173,22 @@ final class Admin extends Singleton {
 		}
 
 		return $maybeEmpty;
+	}
+
+
+
+	/**
+	 * Show notices on post edit update
+	 */
+	public function postEditNotices() {
+
+		$screen = get_current_screen();
+
+		if (!empty($screen) &&
+			'product' == $screen->id &&
+			'product' == $screen->post_type) {
+			Updater::instance()->notices();
+		}
 	}
 
 
