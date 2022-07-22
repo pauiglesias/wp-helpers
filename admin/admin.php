@@ -8,7 +8,7 @@ use \MicroDeploy\Package\Helpers\Util;
 /**
  * Admin class
  *
- * @package WC Stel Order API
+ * @package WP-Helpers
  * @subpackage Admin
  */
 final class Admin extends Singleton {
@@ -28,6 +28,7 @@ final class Admin extends Singleton {
 	protected function __construct() {
 		$this->menus();
 		$this->screen();
+		$this->columns();
 	}
 
 
@@ -72,6 +73,42 @@ final class Admin extends Singleton {
 		if (Util::postParam('nonce_settings')) {
 			Settings::instance()->handle();
 			return;
+		}
+	}
+
+
+
+	/**
+	 * Listing columns hooks
+	 */
+	private function columns() {
+		add_filter('manage_posts_columns', [$this, 'columnsHead'], 11, 2);
+		add_action('manage_posts_custom_column', [$this, 'columnsBody'], 11, 2);
+	}
+
+
+
+	/**
+	 * Adds custom columns
+	 */
+	public function columnsHead($columns, $postType) {
+
+		if ('myPostType' == $postType) {
+			return Columns::instance()->columnsHead($columns);
+		}
+
+		return $columns;
+	}
+
+
+
+	/**
+	 * Content column for each post
+	 */
+	public function columnsBody($columnName, $postId) {
+
+		if (0 === strpos($columnName, Util::key(''))) {
+			Columns::instance()->columnsBody($columnName, $postId);
 		}
 	}
 
