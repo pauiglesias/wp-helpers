@@ -10,7 +10,7 @@ use \MicroDeploy\Package\Helpers\Util;
 /**
  * Settings class
  *
- * @package WC Stel Order API
+ * @package WP-Helpers
  * @subpackage Admin
  */
 final class Settings extends Singleton {
