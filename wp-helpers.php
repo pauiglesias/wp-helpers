@@ -24,6 +24,7 @@ namespace MicroDeploy\Package;
 defined('ABSPATH') || die;
 
 const NAME		= 'Package Name';
+const SLUG		= 'package-Name';
 const FILE 		= __FILE__;
 const PREFIX 	= 'mdwphl';
 const VERSION 	= '1.0.0';

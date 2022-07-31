@@ -26,6 +26,15 @@ class Module {
 	/**
 	 * Constant
 	 */
+	public static function slug() {
+		return Root\SLUG;
+	}
+
+
+
+	/**
+	 * Constant
+	 */
 	public static function file() {
 		return Root\FILE;
 	}
