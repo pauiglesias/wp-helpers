@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * Plugin Name:       Package Name
  * Description:       Package description
  *
@@ -18,7 +17,6 @@
  *
  * @package Package Name
  * @author  Pau Iglesias <pau@microdeploy.com>
- *
  */
 
 namespace MicroDeploy\Package;
