@@ -13,6 +13,13 @@ class Util {
 
 
 	/**
+	 * Meta protected data
+	 */
+	private static $metaProtectedPrefixes = [];
+
+
+
+	/**
 	 * Basic name composition without escaping
 	 */
 	public static function key($name, $join = '_') {
@@ -143,27 +150,23 @@ class Util {
 
 
 	/**
-	 * Protects a given prefix against WP overwriting
+	 * Protects a given prefixed name against WP overwriting
 	 */
-	public static function metaProtectedPrefix($prefix = null) {
+	public static function metaProtected($name = '', $join = '_') {
 
-		static $prefixes = [];
+		$prefix = Module::prefix().$join.$name;
 
-		if (!isset($prefix)) {
-			$prefix = Module::prefix();
+		if (!in_array($prefix, self::$metaProtectedPrefixes)) {
+			self::$metaProtectedPrefixes[] = $prefix;
 		}
 
-		if (!in_array($prefix, $prefixes)) {
-			$prefixes[] = $prefix;
-		}
-
-		if (1 != count($prefixes)) {
+		if (1 != count(self::$metaProtectedPrefixes)) {
 			return;
 		}
 
-		add_filter('is_protected_meta', function($protected, $metaKey) use($prefixes) {
+		add_filter('is_protected_meta', function($protected, $metaKey) {
 
-			foreach ($prefixes as $prefix) {
+			foreach (self::$metaProtectedPrefixes as $prefix) {
 				if (0 === stripos($metaKey, $prefix)) {
 					return true;
 				}
