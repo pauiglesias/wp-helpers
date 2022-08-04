@@ -13,13 +13,6 @@ class Util {
 
 
 	/**
-	 * Meta key protection
-	 */
-	private static $metaProtectedValues = [];
-
-
-
-	/**
 	 * Basic name composition without escaping
 	 */
 	public static function key($name, $join = '_') {
@@ -150,45 +143,35 @@ class Util {
 
 
 	/**
-	 * Protects the current key as a prefix
+	 * Protects a given prefix against WP overwriting
 	 */
-	public static function metaProtected($value) {
-		$values = self::metaProtectedValues($value);
-		if (1 == count($values)) {
-			add_filter('is_protected_meta', [__CLASS__, 'metaProtectedFilter'], PHP_INT_MAX, 2);
+	public static function metaProtectedPrefix($prefix = null) {
+
+		static $prefixes = [];
+
+		if (!isset($prefix)) {
+			$prefix = Module::prefix();
 		}
-	}
 
+		if (!in_array($prefix, $prefixes)) {
+			$prefixes[] = $prefix;
+		}
 
+		if (1 != count($prefixes)) {
+			return;
+		}
 
-	/**
-	 * Filters the meta protected value
-	 */
-	public static function metaProtectedFilter($protected, $metaKey) {
-		foreach (self::metaProtectedValues() as $value) {
-			if (0 === stripos($metaKey, $value)) {
-				return true;
+		add_filter('is_protected_meta', function($protected, $metaKey) use($prefixes) {
+
+			foreach ($prefixes as $prefix) {
+				if (0 === stripos($metaKey, $prefix)) {
+					return true;
+				}
 			}
-		}
-		return $protected;
-	}
 
+			return $protected;
 
-
-	/**
-	 * Retrieve the current metaprotected values
-	 */
-	public static function metaProtectedValues($value = null) {
-
-		if (!isset($value)) {
-			return self::$metaProtectedValues;
-		}
-
-		if (!in_array($value, self::$metaProtectedValues)) {
-			self::$metaProtectedValues[] = $value;
-		}
-
-		return self::$metaProtectedValues;
+		}, PHP_INT_MAX, 2);
 	}
 
 
