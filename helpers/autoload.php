@@ -5,8 +5,9 @@ namespace MicroDeploy\Package\Helpers;
 /**
  * Autoload class
  *
- * @package WordPress
- * @subpackage Helpers
+ * @package		WordPress
+ * @subpackage	Helpers
+ * @version		1.1.0
  */
 final class AutoLoad {
 
@@ -28,16 +29,31 @@ final class AutoLoad {
 
 
 	/**
-	 * Plugin root path
+	 * Root directory and main file
 	 */
-	private $root;
+	private $dir;
+	private $file;
 
 
 
 	/**
 	 * Loaded files
 	 */
-	private $loaded = array();
+	private $loaded = [];
+
+
+
+	/**
+	 * Retrieve single object instance
+	 */
+	public static function instance() {
+
+		if (!isset(self::$instance)) {
+			self::$instance = new self;
+		}
+
+		return self::$instance;
+	}
 
 
 
@@ -46,9 +62,7 @@ final class AutoLoad {
 	 */
 	public static function register($name = null) {
 
-		if (!isset(self::$instance)) {
-			self::$instance = new self;
-		}
+		self::instance();
 
 		if (!empty($name)) {
 			self::$instance->load($name);
@@ -61,6 +75,16 @@ final class AutoLoad {
 	 * Constructor
 	 */
 	private function __construct() {
+		$this->namespace();
+		$this->root();
+	}
+
+
+
+	/**
+	 * Check namespace for vendor and package names
+	 */
+	private function namespace() {
 
 		$namespace = explode('\\', __NAMESPACE__);
 		if (count($namespace) < 2) {
@@ -69,11 +93,23 @@ final class AutoLoad {
 
 		$this->vendor = $namespace[0];
 		$this->package = $namespace[1];
+	}
+
+
+
+	/**
+	 * Check the root via package constant
+	 */
+	private function root() {
 
 		$const = '\\'.$this->vendor.'\\'.$this->package.'\\FILE';
-		if (defined($const)) {
-			$this->root = dirname(constant($const));
+		if (!defined($const)) {
+			return;
 		}
+
+		$hook = 'AutoLoad_'.ltrim($const, '\\');
+		$this->file = apply_filters($hook, constant($const));
+		$this->dir = dirname($this->file);
 	}
 
 
@@ -83,23 +119,8 @@ final class AutoLoad {
 	 */
 	public function load($name) {
 
-		if (!isset($this->root)) {
-			return;
-		}
-
-		$namespace = explode('\\', $name);
-		if ($this->vendor != $namespace[0]) {
-			return;
-		}
-
-		array_shift($namespace);
-
-		if ($this->package == $namespace[0]) {
-			array_shift($namespace);
-		}
-
-		$path = $this->root.'/'.implode('/', str_replace('_', '-', array_map('strtolower', $namespace))).'.php';
-		if (in_array($path, $this->loaded)) {
+		$path = $this->path($name);
+		if (!$path || in_array($path, $this->loaded)) {
 			return;
 		}
 
@@ -107,6 +128,93 @@ final class AutoLoad {
 		if (@file_exists($path)) {
 			require_once $path;
 		}
+	}
+
+
+
+	/**
+	 * Composes namespace path
+	 */
+	private function path($name) {
+		$namespace = $this->match($name);
+		return $namespace ? $this->dir.'/'.implode('/', array_map([self::class, 'studlyCaps2Kebab'], $namespace)).'.php' : false;
+	}
+
+
+
+	/**
+	 * Check namespace and class request matches
+	 */
+	private function match($name) {
+
+		if (!isset($this->vendor) ||
+			!isset($this->dir)) {
+			return false;
+		}
+
+		$namespace = explode('\\', $name);
+		if ($this->vendor != $namespace[0]) {
+			return false;
+		}
+
+		array_shift($namespace);
+
+		if ($this->package != $namespace[0]) {
+			return false;
+		}
+
+		array_shift($namespace);
+
+		return empty($namespace) ? false : $namespace;
+	}
+
+
+
+	/**
+	 * Converts StudlyCaps class names to keban notation
+	 */
+	public static function studlyCaps2Kebab($name) {
+
+		static $letters;
+		if (!isset($letters)) {
+			$letters = range('A', 'Z');
+		}
+
+		static $cached = [];
+		if (isset($cached[$name])) {
+			return $cached[$name];
+		}
+
+		$converted = '';
+
+		for ($i = 0; $i < strlen($name); $i++) {
+			$char = substr($name, $i, 1);
+			$converted .= 0 === $i
+				? strtolower($char)
+				: (in_array($char, $letters) ? '-'.strtolower($char) : str_replace('_', '-', $char));
+		}
+
+		$cached[$name] = $converted;
+
+		return $converted;
+	}
+
+
+
+	/**
+	 * Retrieve root directory
+	 */
+	public function dir() {
+		return $this->dir;
+	}
+
+
+
+	/**
+	 * Retrieve main file
+	 */
+	public function file() {
+		return $this->file;
 	}
 
 
