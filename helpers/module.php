@@ -36,7 +36,16 @@ class Module {
 	 * Constant
 	 */
 	public static function file() {
-		return Root\FILE;
+		return AutoLoad::instance()->file();
+	}
+
+
+
+	/**
+	 * Package directory
+	 */
+	public static function dir() {
+		return AutoLoad::instance()->dir();
 	}
 
 
@@ -73,22 +82,6 @@ class Module {
 	 */
 	public static function debug() {
 		return Root\DEBUG;
-	}
-
-
-
-	/**
-	 * Package directory
-	 */
-	public static function dir() {
-
-		static $dirname;
-		if (isset($dirname)) {
-			return $dirname;
-		}
-
-		$dirname = dirname(Root\FILE);
-		return $dirname;
 	}
 
 
