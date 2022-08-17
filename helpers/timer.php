@@ -5,8 +5,9 @@ namespace MicroDeploy\Package\Helpers;
 /**
  * Timer class
  *
- * @package WordPress
- * @subpackage Helpers
+ * @package		WordPress
+ * @subpackage	Helpers
+ * @version		1.0.0
  */
 class Timer {
 
@@ -52,7 +53,7 @@ class Timer {
 	 *
 	 * @return int|float 	The seconds finished time calculation.
 	 */
-	public function seconds($precision = 0) {
+	public function seconds($precision = 3) {
 
 		$this->ended = microtime(true);
 		$total = $this->ended - $this->started;
