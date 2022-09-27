@@ -49,11 +49,13 @@ class Util {
 			$values[] = esc_attr(Module::prefix().$join.$attr);
 		}
 
+		$display = implode(' ', $values);
+
 		if ($echo) {
-			echo implode(' ', $values);
+			echo $display;
 		}
 
-		return is_array($names) ? $values : $values[0];
+		return $display;
 	}
 
 
