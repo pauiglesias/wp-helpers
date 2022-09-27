@@ -24,7 +24,7 @@ class Json {
 	 */
 	private static $decodeReplace = [
 		['\u0022', 	'\u0027'],
-		["\\\"", 	"\\'"	],
+		["\\\"", 	"'"	],
 	];
 
 
