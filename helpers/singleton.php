@@ -13,6 +13,20 @@ class Singleton {
 
 
 	/**
+	 * Prevent direct `new` operation constructions
+	 */
+	protected function __construct(...$args) {}
+
+
+
+	/**
+	 * Singletons should not be cloneable.
+	 */
+	protected function __clone() { }
+
+
+
+	/**
 	 * Create or retrieve instance
 	 */
 	final public static function instance(...$args) {
@@ -25,13 +39,6 @@ class Singleton {
 
 		return $instance;
 	}
-
-
-
-	/**
-	 * Constructor
-	 */
-	protected function __construct(...$args) {}
 
 
 
