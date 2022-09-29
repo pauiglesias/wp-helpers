@@ -13,7 +13,16 @@ class Admin {
 
 
 	/**
-	 * Verifies nonce submit
+	 * Creates nonce based on module file
+	 */
+	public static function createNonce() {
+		return wp_create_nonce(Module::file());
+	}
+
+
+
+	/**
+	 * Verifies nonce submit based on module file
 	 */
 	public static function verifyNonce($key) {
 
