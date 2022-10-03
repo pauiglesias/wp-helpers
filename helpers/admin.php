@@ -27,7 +27,6 @@ class Admin {
 	public static function verifyNonce($key, $seed = null) {
 
 		if (!wp_verify_nonce(Util::postParam($key), isset($seed) ? $seed : Module::file())) {
-			Notices::error('Not valid security credentials. Please try again.');
 			return false;
 		}
 
