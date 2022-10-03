@@ -22,15 +22,19 @@ class Admin {
 
 
 	/**
-	 * Verifies nonce submit based on a seed or module file
+	 * Verifies nonce post submit based on a seed or module file
 	 */
 	public static function verifyNonce($key, $seed = null) {
+		return wp_verify_nonce(Util::postParam($key), isset($seed) ? $seed : Module::file());
+	}
 
-		if (!wp_verify_nonce(Util::postParam($key), isset($seed) ? $seed : Module::file())) {
-			return false;
-		}
 
-		return true;
+
+	/**
+	 * Verifies nonce value based on a seed or module file
+	 */
+	public static function verifyNonceValue($value, $seed = null) {
+		return wp_verify_nonce($value, isset($seed) ? $seed : Module::file());
 	}
 
 
