@@ -5,8 +5,9 @@ namespace MicroDeploy\Package\Helpers;
 /**
  * Cron class
  *
- * @package WordPress
- * @subpackage Helpers
+ * @package		WordPress
+ * @subpackage	Helpers
+ * @version		1.0.0
  */
 class Cron {
 
