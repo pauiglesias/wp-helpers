@@ -43,7 +43,7 @@ class Cron {
 	private function init($args) {
 		$this->config = wp_parse_args($args, [
 			'interval'			=> self::REPEAT_INTERVAL,
-			'interval_display'	=> sprintf(__('%s seconds', self::REPEAT_INTERVAL)),
+			'interval_display'	=> sprintf(__('%s seconds'), self::REPEAT_INTERVAL),
 			'seconds_offset'	=> self::SCHEDULE_OFFSET,
 			'action_key'		=> '',
 			'schedule_key'		=> '',
