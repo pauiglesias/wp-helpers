@@ -6,8 +6,8 @@ if [ ! -d "$dir_path" ]; then
   exit 1
 fi
 
-input_string=$1
-if [[ $input_string == "" ]]; then
+input_test=$1
+if [[ $input_test == "" ]]; then
 	echo ""
 	echo "Empty replacer, example command: (must be splitted by + signs)"
 	echo ""
@@ -16,17 +16,32 @@ if [[ $input_string == "" ]]; then
 	exit 1
 fi
 
-search="namespace MicroDeploy\\\Package\\\Helpers;"
+
+# input
 
 backslash_old="+"
 backslash_new="\\\\"
-replacer="${input_string//${backslash_old}/${backslash_new}}"
+input_string="${input_test//${backslash_old}/${backslash_new}}"
 
-new_string="namespace $replacer\\\Helpers;"
+
+# search 1
+
+search1="namespace MicroDeploy\\\Package\\\Helpers;"
+new_string1="namespace $input_string\\\Helpers;"
+
+
+# search 2
+
+search2="use \\\MicroDeploy\\\Package "
+new_string2="use ${backslash_new}${input_string} "
+
+
+# replacing
 
 for entry_path in "$dir_path"/*.php
 do
-	sed -i "s/$search/$new_string/" "$entry_path"
+	sed -i "s/$search1/$new_string1/" "$entry_path"
+	sed -i "s/$search2/$new_string2/" "$entry_path"
 done
 
 echo 'finished'
