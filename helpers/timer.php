@@ -5,6 +5,8 @@ namespace MicroDeploy\Package\Helpers;
 /**
  * Timer class
  *
+ * Single timer encapsulated in individual objects.
+ *
  * @package		WordPress
  * @subpackage	Helpers
  * @version		1.0.0

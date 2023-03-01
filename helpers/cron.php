@@ -3,7 +3,9 @@
 namespace MicroDeploy\Package\Helpers;
 
 /**
- * Cron class
+ * CRON class
+ *
+ * A simple way to invoke the WordPress CRON.
  *
  * @package		WordPress
  * @subpackage	Helpers

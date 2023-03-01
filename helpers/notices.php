@@ -5,8 +5,11 @@ namespace MicroDeploy\Package\Helpers;
 /**
  * Notices class
  *
- * @package WordPress
- * @subpackage Helpers
+ * A simple way to create notifications in WordPress admin.
+ *
+ * @package		WordPress
+ * @subpackage	Helpers
+ * @version		1.0.0
  */
 class Notices {
 

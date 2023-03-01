@@ -5,8 +5,11 @@ namespace MicroDeploy\Package\Helpers;
 /**
  * Singleton class
  *
- * @package WordPress
- * @subpackage Helpers
+ * A singleton pattern implementation.
+ *
+ * @package		WordPress
+ * @subpackage	Helpers
+ * @version		1.0.0
  */
 class Singleton {
 

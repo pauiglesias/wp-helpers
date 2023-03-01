@@ -5,6 +5,8 @@ namespace MicroDeploy\Package\Helpers;
 /**
  * Autoload class
  *
+ * An autoloading based on the parent namespace of the current one.
+ *
  * @package		WordPress
  * @subpackage	Helpers
  * @version		1.1.0

@@ -5,6 +5,8 @@ namespace MicroDeploy\Package\Helpers;
 /**
  * Upload class
  *
+ * Uploads a file from a given Url to the WordPress Media Library.
+ *
  * @package		WordPress
  * @subpackage	Helpers
  * @version		1.0.0

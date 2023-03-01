@@ -5,8 +5,11 @@ namespace MicroDeploy\Package\Helpers;
 /**
  * Bearer class
  *
- * @package WordPress
- * @subpackage Helpers
+ * Checks and retrieves the Bearer token from the request headers.
+ *
+ * @package		WordPress
+ * @subpackage	Helpers
+ * @version		1.0.0
  */
 class Bearer {
 

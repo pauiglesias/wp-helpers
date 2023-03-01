@@ -3,10 +3,13 @@
 namespace MicroDeploy\Package\Helpers;
 
 /**
- * Json class
+ * JSON class
  *
- * @package WordPress
- * @subpackage Helpers
+ * Fail-safe encoding/decoding of json strings.
+ *
+ * @package		WordPress
+ * @subpackage	Helpers
+ * @version		1.0.0
  */
 class Json {
 

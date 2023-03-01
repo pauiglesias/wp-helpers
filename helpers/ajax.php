@@ -3,10 +3,13 @@
 namespace MicroDeploy\Package\Helpers;
 
 /**
- * Ajax class
+ * AJAX class
  *
- * @package WordPress
- * @subpackage Helpers
+ * Wrapper AJAX common methods and default response defintion.
+ *
+ * @package		WordPress
+ * @subpackage	Helpers
+ * @version		1.0.0
  */
 class Ajax {
 

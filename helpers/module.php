@@ -7,8 +7,11 @@ use \MicroDeploy\Package as Root;
 /**
  * Module class
  *
- * @package WordPress
- * @subpackage Helpers
+ * An implementation of the root constants in a class with static methods.
+ *
+ * @package		WordPress
+ * @subpackage	Helpers
+ * @version		1.0.0
  */
 class Module {
 

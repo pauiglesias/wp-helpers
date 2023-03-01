@@ -5,8 +5,11 @@ namespace MicroDeploy\Package\Helpers;
 /**
  * Log class
  *
- * @package WordPress
- * @subpackage Helpers
+ * A wrapper class for the error_log content.
+ *
+ * @package		WordPress
+ * @subpackage	Helpers
+ * @version		1.0.0
  */
 class Log {
 

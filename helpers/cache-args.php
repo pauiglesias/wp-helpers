@@ -5,8 +5,11 @@ namespace MicroDeploy\Package\Helpers;
 /**
  * Cache Args class
  *
- * @package WordPress
- * @subpackage Helpers
+ * Creates cache sets based on data arrays.
+ *
+ * @package		WordPress
+ * @subpackage	Helpers
+ * @version		1.0.0
  */
 class CacheArgs {
 
@@ -37,7 +40,7 @@ class CacheArgs {
 	/**
 	 * Saves data into cache
 	 *
-	 * @todo change class to cache-args
+	 * @todo change class to cache-by-args
 	 */
 	public function set($args, $value) {
 

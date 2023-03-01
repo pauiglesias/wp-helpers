@@ -5,8 +5,11 @@ namespace MicroDeploy\Package\Helpers;
 /**
  * Util class
  *
- * @package WordPress
- * @subpackage Helpers
+ * Common general util functions.
+ *
+ * @package		WordPress
+ * @subpackage	Helpers
+ * @version		1.0.0
  */
 class Util {
 

@@ -5,8 +5,11 @@ namespace MicroDeploy\Package\Helpers;
 /**
  * Nonce class
  *
- * @package WordPress
- * @subpackage Helpers
+ * Generates WP nonces wihtout the need for logged-in users in the WordPress admin.
+ *
+ * @package		WordPress
+ * @subpackage	Helpers
+ * @version		1.0.0
  */
 class Nonce {
 
@@ -38,12 +41,10 @@ class Nonce {
 	 */
 	public static function instance($salt = null) {
 
-		// Check instance
 		if (!isset(self::$instance)) {
 			self::$instance = new self($salt);
 		}
 
-		// Done
 		return self::$instance;
 	}
 
@@ -55,7 +56,6 @@ class Nonce {
 	 */
 	public function __construct($salt = null) {
 
-		// Salt setup
 		if (isset($salt)) {
 			$this->salt = $salt;
 		}
@@ -77,13 +77,11 @@ class Nonce {
 	 */
 	public function verify($nonce, $action = '') {
 
-		// Basic check
 		$nonce = (string) $nonce;
 		if (empty($nonce)) {
 			return false;
 		}
 
-		// Time based "tick"
 		$tick = $this->tick();
 
 		// Nonce generated 0-12 hours ago
