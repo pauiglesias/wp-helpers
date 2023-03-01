@@ -5,7 +5,7 @@ namespace MicroDeploy\Package\Helpers;
 /**
  * Admin class
  *
- * A common methods used from the WordPress admin.
+ * Common methods used from the WordPress admin.
  *
  * @package		WordPress
  * @subpackage	Helpers
