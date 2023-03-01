@@ -3,7 +3,7 @@
 namespace MicroDeploy\Package\Helpers;
 
 /**
- * AJAX class
+ * Ajax class
  *
  * Wrapper AJAX methods and default response definition.
  *
