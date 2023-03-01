@@ -13,6 +13,9 @@ namespace MicroDeploy\Package\Helpers;
  * @package		WordPress
  * @subpackage	Helpers
  * @version		1.0.0
+ * @license		GPLv3
+ * @author		Pau Iglesias
+ * @link		https://github.com/pauiglesias/wp-helpers
  */
 class Admin {
 

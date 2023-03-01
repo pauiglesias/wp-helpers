@@ -12,6 +12,9 @@ use \MicroDeploy\Package as Root;
  * @package		WordPress
  * @subpackage	Helpers
  * @version		1.0.0
+ * @license		GPLv3
+ * @author		Pau Iglesias
+ * @link		https://github.com/pauiglesias/wp-helpers
  */
 class Module {
 

@@ -7,8 +7,12 @@ namespace MicroDeploy\Package\Helpers;
  *
  * Checks the plugin remote updates and performs the plugin update.
  *
- * @package WordPress
- * @subpackage Helpers
+ * @package		WordPress
+ * @subpackage	Helpers
+ * @version		1.0.0
+ * @license		GPLv3
+ * @author		Pau Iglesias
+ * @link		https://github.com/pauiglesias/wp-helpers
  */
 class Updater {
 
