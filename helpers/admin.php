@@ -23,10 +23,10 @@ class Admin {
 	 *
 	 * @param string|null	$seed	The optional seed to create the nonce (by default the project FILE constant).
 	 *
-	 * @return string The generated nonce.
+	 * @return string|false The generated nonce or false if the basis WP function is not available
 	 */
 	public static function createNonce($seed = null) {
-		return wp_create_nonce(isset($seed) ? $seed : Module::file());
+		return function_exists('wp_create_nonce') ? wp_create_nonce(isset($seed) ? $seed : Module::file()) : false;
 	}
 
 
@@ -39,10 +39,10 @@ class Admin {
 	 *
 	 * @return int|false	1 if the nonce is valid and generated between 0-12 hours ago,
 	 *						2 if the nonce is valid and generated between 12-24 hours ago.
-	 *						false if the nonce is invalid.
+	 *						false if the nonce is invalid or the basis WP function is not available.
 	 */
 	public static function verifyNoncePosted($key, $seed = null) {
-		return wp_verify_nonce(Util::postParam($key), isset($seed) ? $seed : Module::file());
+		return function_exists('wp_verify_nonce') ? wp_verify_nonce(Util::postParam($key), isset($seed) ? $seed : Module::file()) : false;
 	}
 
 
@@ -55,10 +55,10 @@ class Admin {
 	 *
 	 * @return int|false	1 if the nonce is valid and generated between 0-12 hours ago,
 	 *						2 if the nonce is valid and generated between 12-24 hours ago.
-	 *						false if the nonce is invalid.
+	 *						false if the nonce is invalid or the basis WP function is not available.
 	 */
 	public static function verifyNonceValue($value, $seed = null) {
-		return wp_verify_nonce($value, isset($seed) ? $seed : Module::file());
+		return function_exists('wp_verify_nonce') ? wp_verify_nonce($value, isset($seed) ? $seed : Module::file()) : false;
 	}
 
 
