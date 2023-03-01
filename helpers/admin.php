@@ -7,6 +7,9 @@ namespace MicroDeploy\Package\Helpers;
  *
  * Common methods used from the WordPress admin.
  *
+ * @uses Util class
+ * @uses Module class
+ *
  * @package		WordPress
  * @subpackage	Helpers
  * @version		1.0.0
@@ -16,7 +19,11 @@ class Admin {
 
 
 	/**
-	 * Creates nonce based on a seed or module file
+	 * Creates a WP standar nonce based on a seed.
+	 *
+	 * @param string|null	$seed	The optional seed to create the nonce (by default the project FILE constant).
+	 *
+	 * @return string The generated nonce.
 	 */
 	public static function createNonce($seed = null) {
 		return wp_create_nonce(isset($seed) ? $seed : Module::file());
@@ -25,16 +32,30 @@ class Admin {
 
 
 	/**
-	 * Verifies nonce post submit based on a seed or module file
+	 * Verifies the WP nonce on a post submit from a given key
+	 *
+	 * @param string		$key 	The key to verify the nonce (will be prefixed).
+	 * @param string|null	$seed	The optional seed that created the nonce (by default the project FILE constant).
+	 *
+	 * @return int|false	1 if the nonce is valid and generated between 0-12 hours ago,
+	 *						2 if the nonce is valid and generated between 12-24 hours ago.
+	 *						false if the nonce is invalid.
 	 */
-	public static function verifyNonce($key, $seed = null) {
+	public static function verifyNoncePosted($key, $seed = null) {
 		return wp_verify_nonce(Util::postParam($key), isset($seed) ? $seed : Module::file());
 	}
 
 
 
 	/**
-	 * Verifies nonce value based on a seed or module file
+	 * Verifies a nonce value based on a seed.
+	 *
+	 * @param string		$value	The value of the generated nonce (will NOT be prefixed).
+	 * @param string|null	$seed	The optional seed that created the nonce (by default the project FILE constant).
+	 *
+	 * @return int|false	1 if the nonce is valid and generated between 0-12 hours ago,
+	 *						2 if the nonce is valid and generated between 12-24 hours ago.
+	 *						false if the nonce is invalid.
 	 */
 	public static function verifyNonceValue($value, $seed = null) {
 		return wp_verify_nonce($value, isset($seed) ? $seed : Module::file());
@@ -43,7 +64,13 @@ class Admin {
 
 
 	/**
-	 * Check if a given screen belongs to the slug
+	 * Checks if a given screen belongs to the slug
+	 *
+	 * @param string|object	$screen	The id or an object of a WP admin screen.
+	 * @param string		$slug	The slug to compare with the screen id.
+	 * @param string		$splig	The chunk to split the screen id.
+	 *
+	 * @return bool	Whether the screen belongs to the slug.
 	 */
 	public static function screenOf($screen, $slug, $split = '_page_') {
 
