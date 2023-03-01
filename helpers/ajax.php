@@ -5,7 +5,7 @@ namespace MicroDeploy\Package\Helpers;
 /**
  * AJAX class
  *
- * Wrapper AJAX common methods and default response defintion.
+ * Wrapper AJAX methods and default response definition.
  *
  * @package		WordPress
  * @subpackage	Helpers
@@ -18,7 +18,7 @@ class Ajax {
 	/**
 	 * Checking for a valid nonce
 	 */
-	public static function verifyNonce($param, $seed) {
+	public static function verifyNoncePosted($param, $seed) {
 		return !empty($_POST[$param]) &&
 		 		function_exists('wp_verify_nonce') &&
 				wp_verify_nonce($_POST[$param], $seed);
