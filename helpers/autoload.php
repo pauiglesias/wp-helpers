@@ -142,7 +142,7 @@ final class AutoLoad {
 	 */
 	private function path($name) {
 		$namespace = $this->match($name);
-		return $namespace ? $this->dir.'/'.implode('/', array_map([self::class, 'studlyCaps2Kebab'], $namespace)).'.php' : false;
+		return $namespace ? $this->dir.DIRECTORY_SEPARATOR.implode(DIRECTORY_SEPARATOR, array_map([self::class, 'studlyCaps2Kebab'], $namespace)).'.php' : false;
 	}
 
 
