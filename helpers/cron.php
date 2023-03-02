@@ -3,9 +3,11 @@
 namespace MicroDeploy\Package\Helpers;
 
 /**
- * CRON class
+ * Cron class for scheduling recurring events in WordPress.
  *
- * A simple way to invoke the WordPress CRON.
+ * This class provides a simple interface for setting up and managing recurring events
+ * using the WordPress Cron API. It can be used to schedule actions to occur at specified
+ * intervals, and to ensure that those actions are executed reliably and efficiently.
  *
  * @package		WordPress
  * @subpackage	Helpers
@@ -19,22 +21,36 @@ class Cron {
 
 
 	/**
-	 * Interval and offset
+	 * The number of seconds between each iteration of the cron job.
+	 *
+	 * @var int
 	 */
 	const REPEAT_INTERVAL = 60;
+
+
+
+	/**
+	 * The number of seconds to offset the first run of the cron job.
+	 *
+	 * @var int
+	 */
 	const SCHEDULE_OFFSET = 30;
 
 
 
 	/**
-	 * Config array
+	 * An array of configuration options for the cron job.
+	 *
+	 * @var array
 	 */
 	private $config;
 
 
 
 	/**
-	 * Constructor
+	 * Constructor for the Cron class.
+	 *
+	 * @param array $args An array of configuration options for the cron job.
 	 */
 	public function __construct($args) {
 		$this->init($args);
@@ -44,7 +60,9 @@ class Cron {
 
 
 	/**
-	 * Init configuration
+	 * Initializes the configuration options for the cron job.
+	 *
+	 * @param array $args An array of configuration options for the cron job.
 	 */
 	private function init($args) {
 		$this->config = wp_parse_args($args, [
@@ -60,7 +78,7 @@ class Cron {
 
 
 	/**
-	 * Start the cron processes
+	 * Starts the cron job by setting up the scheduled actions.
 	 */
 	private function start() {
 		$this->action();
@@ -80,7 +98,7 @@ class Cron {
 
 
 	/**
-	 * Minute schedule
+	 * Adds a custom interval to the cron schedules.
 	 */
 	private function interval() {
 		add_filter('cron_schedules', function($schedules) {
@@ -95,7 +113,7 @@ class Cron {
 
 
 	/**
-	 * Check scheduled event
+	 * Checks if the scheduled event has been set and schedules it if it has not.
 	 */
 	private function schedule() {
 		if (!wp_next_scheduled($this->actionKey())) {
@@ -106,7 +124,9 @@ class Cron {
 
 
 	/**
-	 * Composes schedule key
+	 * Composes the schedule key for the cron job.
+	 *
+	 * @return string The schedule key for the cron job.
 	 */
 	private function scheduleKey() {
 		return Util::key($this->config['action_key']);
@@ -115,7 +135,9 @@ class Cron {
 
 
 	/**
-	 * Composes action key
+	 * Composes the action key for the cron job.
+	 *
+	 * @return string The action key for the cron job.
 	 */
 	private function actionKey() {
 		return Util::key($this->config['schedule_key']);
