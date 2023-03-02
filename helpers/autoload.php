@@ -19,16 +19,28 @@ final class AutoLoad {
 
 
 	/**
-	 * Singleton
+	 * Singleton instance of the AutoLoad class.
+	 *
+	 * @var AutoLoad|null
 	 */
 	private static $instance;
 
 
 
 	/**
-	 * Namespace vendor and package
+	 * The vendor name of the package.
+	 *
+	 * @var string
 	 */
 	private $vendor;
+
+
+
+	/**
+	 * The package name.
+	 *
+	 * @var string
+	 */
 	private $package;
 
 
@@ -49,7 +61,9 @@ final class AutoLoad {
 
 
 	/**
-	 * Retrieve single object instance
+	 * Returns a singleton instance of the current class.
+	 *
+	 * @return self The singleton instance of the current class.
 	 */
 	public static function instance() {
 
@@ -63,21 +77,27 @@ final class AutoLoad {
 
 
 	/**
-	 * Create instance and try to load the class
+	 * Registers a new instance of the class and loads a specified class name if provided.
+	 *
+	 * @param string|null $className The name of the class to be loaded.
+	 *
+	 * @return void
 	 */
-	public static function register($name = null) {
+	public static function register($className = null) {
 
 		self::instance();
 
-		if (!empty($name)) {
-			self::$instance->load($name);
+		if (!empty($className)) {
+			self::$instance->load($className);
 		}
 	}
 
 
 
 	/**
-	 * Constructor
+	 * Private constructor that initializes the object checking the namespace and set the project root.
+	 *
+	 * @return void
 	 */
 	private function __construct() {
 		$this->namespace();
@@ -87,7 +107,9 @@ final class AutoLoad {
 
 
 	/**
-	 * Check namespace for vendor and package names
+	 * Initializes the vendor and package properties based on the current namespace.
+	 *
+	 * @return void
 	 */
 	private function namespace() {
 
@@ -103,7 +125,9 @@ final class AutoLoad {
 
 
 	/**
-	 * Check the root via package constant
+	 * Initializes the file and dir properties based on the root directory constant of the class.
+	 *
+	 * @return void
 	 */
 	private function root() {
 
@@ -120,11 +144,15 @@ final class AutoLoad {
 
 
 	/**
-	 * Load by namespace
+	 * Loads a PHP file from the given class name if it exists and has not been loaded before.
+	 *
+	 * @param string $className The name of the class to be loaded.
+	 *
+	 * @return void
 	 */
-	public function load($name) {
+	public function load($className) {
 
-		$path = $this->path($name);
+		$path = $this->path($className);
 		if (!$path || in_array($path, $this->loaded)) {
 			return;
 		}
@@ -138,26 +166,34 @@ final class AutoLoad {
 
 
 	/**
-	 * Composes namespace path
+	 * Gets the path to the PHP file containing the given class name if it matches the expected vendor and package names.
+	 *
+	 * @param string $className The name of the class to get the path for.
+	 *
+	 * @return string|false The path to the PHP file in case of matching the project vendor and package.
 	 */
-	private function path($name) {
-		$namespace = $this->match($name);
+	private function path($className) {
+		$namespace = $this->match($className);
 		return $namespace ? $this->dir.DIRECTORY_SEPARATOR.implode(DIRECTORY_SEPARATOR, array_map([self::class, 'studlyCaps2Kebab'], $namespace)).'.php' : false;
 	}
 
 
 
 	/**
-	 * Check namespace and class request matches
+	 * Matches the given class name with the vendor and package names of the registered instance.
+	 *
+	 * @param string $className The name of the class to match.
+	 *
+	 * @return array|false An array of namespace parts if the vendor and package names match, false otherwise.
 	 */
-	private function match($name) {
+	private function match($className) {
 
 		if (!isset($this->vendor) ||
 			!isset($this->dir)) {
 			return false;
 		}
 
-		$namespace = explode('\\', $name);
+		$namespace = explode('\\', $className);
 		if ($this->vendor != $namespace[0]) {
 			return false;
 		}
@@ -176,9 +212,13 @@ final class AutoLoad {
 
 
 	/**
-	 * Converts StudlyCaps class names to keban notation
+	 * Converts a string from StudlyCaps to kebab-case.
+	 *
+	 * @param string $className The input string to be converted.
+	 *
+	 * @return string The converted string in kebab-case.
 	 */
-	public static function studlyCaps2Kebab($name) {
+	public static function studlyCaps2Kebab($className) {
 
 		static $letters;
 		if (!isset($letters)) {
@@ -186,20 +226,20 @@ final class AutoLoad {
 		}
 
 		static $cached = [];
-		if (isset($cached[$name])) {
-			return $cached[$name];
+		if (isset($cached[$className])) {
+			return $cached[$className];
 		}
 
 		$converted = '';
 
-		for ($i = 0; $i < strlen($name); $i++) {
-			$char = substr($name, $i, 1);
+		for ($i = 0; $i < strlen($className); $i++) {
+			$char = substr($className, $i, 1);
 			$converted .= 0 === $i
 				? strtolower($char)
 				: (in_array($char, $letters) ? '-'.strtolower($char) : str_replace('_', '-', $char));
 		}
 
-		$cached[$name] = $converted;
+		$cached[$className] = $converted;
 
 		return $converted;
 	}
@@ -207,7 +247,9 @@ final class AutoLoad {
 
 
 	/**
-	 * Retrieve root directory
+	 * Returns the directory path of the current namespace.
+	 *
+	 * @return string The directory path of the current namespace.
 	 */
 	public function dir() {
 		return $this->dir;
@@ -216,7 +258,9 @@ final class AutoLoad {
 
 
 	/**
-	 * Retrieve main file
+	 * Returns the file path of the current namespace.
+	 *
+	 * @return string The file path of the current namespace.
 	 */
 	public function file() {
 		return $this->file;
@@ -226,5 +270,11 @@ final class AutoLoad {
 
 }
 
-// Autoload in throw exceptions mode
+/**
+ * Registers the AutoLoad::register method as an autoloading function.
+ *
+ * @param callable $autoload_function The autoloading function to register.
+ * @param bool $throw Whether to throw exceptions when the autoload function fails to find a class. Default true.
+ * @param bool $prepend Whether to prepend the autoloading function to the autoloading functions stack. Defautl false.
+ */
 spl_autoload_register(__NAMESPACE__.'\AutoLoad::register', true);
