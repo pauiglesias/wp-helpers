@@ -5,7 +5,7 @@ namespace MicroDeploy\Package\Helpers;
 /**
  * Ajax class
  *
- * Wrapper AJAX methods and default response definition.
+ * Provides methods to handle AJAX requests and responses in a standardized way.
  *
  * @uses Module class
  *
