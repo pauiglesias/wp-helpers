@@ -28,7 +28,7 @@ final class AutoLoad {
 
 
 	/**
-	 * The vendor name of the package.
+	 * The project vendor name.
 	 *
 	 * @var string
 	 */
@@ -37,7 +37,7 @@ final class AutoLoad {
 
 
 	/**
-	 * The package name.
+	 * The main package name.
 	 *
 	 * @var string
 	 */
@@ -46,16 +46,28 @@ final class AutoLoad {
 
 
 	/**
-	 * Root directory and main file
+	 * Root directory path of the current project.
+	 *
+	 * @var string
 	 */
 	private $dir;
+
+
+
+	/**
+	 * The main file path of the current project.
+	 *
+	 * @var string
+	 */
 	private $file;
 
 
 
 	/**
-	 * Loaded files
-	 */
+	 * An array containing the paths of already loaded files
+	 * *
+	 * @var array
+	*/
 	private $loaded = [];
 
 
