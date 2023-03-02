@@ -14,21 +14,7 @@ namespace MicroDeploy\Package\Helpers;
  * @author		Pau Iglesias
  * @link		https://github.com/pauiglesias/wp-helpers
  */
-class Singleton {
-
-
-
-	/**
-	 * Prevent direct `new` operation constructions
-	 */
-	protected function __construct(...$args) {}
-
-
-
-	/**
-	 * Singletons should not be cloneable.
-	 */
-	protected function __clone() { }
+abstract class Singleton {
 
 
 
@@ -37,14 +23,30 @@ class Singleton {
 	 */
 	final public static function instance(...$args) {
 
-		static $instance;
+		static $instance = [];
 
-		if (!isset($instance)) {
-			$instance = new static(...$args);
+		$class = get_called_class();
+
+		if (!isset($instance[$class])) {
+			$instance[$class] = new static(...$args);
 		}
 
-		return $instance;
+		return $instance[$class];
 	}
+
+
+
+	/**
+	 * Allow constructor
+	 */
+	protected function __construct(...$args) {}
+
+
+
+	/**
+	 * Prevent object cloning
+	 */
+	final private function __clone() { }
 
 
 
