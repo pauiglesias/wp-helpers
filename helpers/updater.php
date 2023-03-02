@@ -41,7 +41,8 @@ class Updater {
 	public function init($pluginFile, $infoJsonUrl, $args) {
 
 		$config = wp_parse_args([
-			'plugin'				=> get_plugin_data($pluginFile),
+			'plugin-data'			=> null,
+			'plugin-file'			=> $pluginFile,
 			'plugin-basename'		=> plugin_basename($pluginFile),
 			'plugin-slug'			=> basename(dirname($pluginFile)),
 			'info-json-url'			=> $infoJsonUrl,
@@ -153,6 +154,10 @@ print_r($data);die; */
 			return $transient;
 		}
 
+		if (!isset($this->config['plugin-data'])) {
+			$this->pluginData();
+		}
+
 		if (!$this->outdated($data)) {
 			return $transient;
 		}
@@ -176,8 +181,8 @@ print_r($data);die; */
 	 * Check if the plugin is outdated
 	 */
 	private function outdated($data) {
-		return empty($data['version']) || empty($this->config['plugin']['Version']) ||
-		version_compare($data['version'], $this->config['plugin']['Version'], '>');
+		return empty($data['version']) || empty($this->config['plugin-data']['Version']) ||
+		version_compare($data['version'], $this->config['plugin-data']['Version'], '>');
 	}
 
 
@@ -275,6 +280,16 @@ print_r($data);die; */
 	 */
 	private function jsonEncode($json) {
 		return @json_encode(['timestamp' => time(), 'json' => $json], JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+	}
+
+
+
+	/**
+	 * Retrieve plugin data from plugin file
+	 */
+	private function pluginData() {
+		require_once ABSPATH.'wp-admin/includes/plugin.php';
+		$this->config['plugin-data'] = get_plugin_data($this->config['plugin-file']);
 	}
 
 
