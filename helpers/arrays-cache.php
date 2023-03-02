@@ -3,9 +3,9 @@
 namespace MicroDeploy\Package\Helpers;
 
 /**
- * Args Cache class
+ * Array Cache class
  *
- * Creates in-memory cache sets based on data arrays.
+ * Creates in-memory cache sets based on data arrays and a unique generated key.
  *
  * @package		WordPress
  * @subpackage	Helpers
@@ -14,7 +14,7 @@ namespace MicroDeploy\Package\Helpers;
  * @author		Pau Iglesias
  * @link		https://github.com/pauiglesias/wp-helpers
  */
-class ArgsCache {
+class ArrayCache {
 
 
 
@@ -66,7 +66,7 @@ class ArgsCache {
 
 
 	/**
-	 * Generates cache key based on given arguments.
+	 * Generates cache key based on sorting the given array.
 	 *
 	 * param array $args An associative array of arguments to generate the cache key.
 	 *
