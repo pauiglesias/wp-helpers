@@ -5,7 +5,7 @@ namespace MicroDeploy\Package\Helpers;
 /**
  * Bearer class
  *
- * This Bearer class provides a set of static methods for obtaining the access token from the
+ * Provides a set of static methods for obtaining the access token from the
  * authorization header in the HTTP request.
  *
  * @package		WordPress
@@ -84,7 +84,10 @@ class Bearer {
 		}
 
 		// Server-side fix for bug in old Android versions (a nice side-effect of this fix means we don't care about capitalization for Authorization)
-		$requestHeaders = array_combine(array_map('ucwords', array_keys($requestHeaders)), array_values($requestHeaders));
+		$requestHeaders = array_combine(
+			array_map('ucwords', array_keys($requestHeaders)),
+			array_values($requestHeaders)
+		);
 
 		if (!isset($requestHeaders['Authorization'])) {
 			return null;
