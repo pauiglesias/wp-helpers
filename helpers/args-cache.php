@@ -3,9 +3,9 @@
 namespace MicroDeploy\Package\Helpers;
 
 /**
- * Cache Args class
+ * Args Cache class
  *
- * Creates cache sets based on data arrays.
+ * Creates in-memory cache sets based on data arrays.
  *
  * @package		WordPress
  * @subpackage	Helpers
@@ -14,7 +14,7 @@ namespace MicroDeploy\Package\Helpers;
  * @author		Pau Iglesias
  * @link		https://github.com/pauiglesias/wp-helpers
  */
-class CacheArgs {
+class ArgsCache {
 
 
 
@@ -26,7 +26,11 @@ class CacheArgs {
 
 
 	/**
-	 * Check a cached element
+	 * Get cached data matching the given array arguments.
+	 *
+	 * @param array $args An associative array of arguments to generate the cache key.
+	 *
+	 *  @return mixed|null Returns the cached data if available or null if not found.
 	 */
 	public function get($args) {
 
@@ -41,9 +45,12 @@ class CacheArgs {
 
 
 	/**
-	 * Saves data into cache
+	 * Set data in cache based on given arguments.
 	 *
-	 * @todo change class to cache-by-args
+	 * @param array $args An associative array of arguments to generate the cache key.
+	 * @param mixed $value The value to be stored in cache.
+	 *
+	 * @return bool Returns true on successful cache insertion, false otherwise.
 	 */
 	public function set($args, $value) {
 
@@ -59,7 +66,11 @@ class CacheArgs {
 
 
 	/**
-	 * Composes the cache key from the arguments
+	 * Generates cache key based on given arguments.
+	 *
+	 * param array $args An associative array of arguments to generate the cache key.
+	 *
+	 * @return string Returns a unique cache key based on the given arguments.
 	 */
 	public static function key($args) {
 		ksort($args);
