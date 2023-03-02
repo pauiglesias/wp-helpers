@@ -5,7 +5,7 @@ namespace MicroDeploy\Package\Helpers;
 /**
  * Array Cache class
  *
- * Creates in-memory cache sets based on data arrays and a unique generated key.
+ * Creates in-memory cache sets based on data arrays and unique generated keys.
  *
  * @package		WordPress
  * @subpackage	Helpers
@@ -19,7 +19,9 @@ class ArrayCache {
 
 
 	/**
-	 * Cached data
+	 * The internal array to store cached data.
+	 *
+	 * @var array $data An associative array to store cached data.
 	 */
 	private $data = [];
 
