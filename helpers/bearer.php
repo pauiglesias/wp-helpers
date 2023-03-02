@@ -5,11 +5,13 @@ namespace MicroDeploy\Package\Helpers;
 /**
  * Bearer class
  *
- * Checks and retrieves the Bearer token from the request headers.
+ * This Bearer class provides a set of static methods for obtaining the access token from the
+ * authorization header in the HTTP request.
  *
  * @package		WordPress
  * @subpackage	Helpers
  * @version		1.0.0
+ * @category	 Authentication
  * @license		GPLv3
  * @author		Pau Iglesias
  * @link		https://github.com/pauiglesias/wp-helpers
@@ -19,7 +21,9 @@ class Bearer {
 
 
 	/**
-	 * Get access token from header
+	 * Get the access token from the authorization header.
+	 *
+	 * @return string|null The access token string or null if not found.
 	 */
 	public static function token() {
 
@@ -38,7 +42,9 @@ class Bearer {
 
 
 	/**
-	 * Obtain the authorization header
+	 * Obtain the authorization header from the request headers.
+	 *
+	 * @return string|null The authorization header string or null if not found.
 	 */
 	public static function header(){
 
@@ -62,7 +68,9 @@ class Bearer {
 
 
 	/**
-	 * Retrieve Apache Authorization Header
+	 * Retrieve the Apache Authorization Header from the request headers.
+	 *
+	 * @return string|null The Apache Authorization Header string or null if not found.
 	 */
 	private static function apacheAuthHeader() {
 
