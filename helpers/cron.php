@@ -11,7 +11,7 @@ namespace MicroDeploy\Package\Helpers;
  *
  * @package		WordPress
  * @subpackage	Helpers
- * @version		1.0.0
+ * @version		1.1.0
  * @license		GPLv3
  * @author		Pau Iglesias
  * @link		https://github.com/pauiglesias/wp-helpers
@@ -34,7 +34,7 @@ class Cron {
 	 *
 	 * @var int
 	 */
-	const SCHEDULE_OFFSET = 30;
+	const SCHEDULE_OFFSET = 60;
 
 
 
@@ -69,6 +69,7 @@ class Cron {
 			'interval'			=> self::REPEAT_INTERVAL,
 			'interval_display'	=> sprintf(__('%s seconds'), self::REPEAT_INTERVAL),
 			'seconds_offset'	=> self::SCHEDULE_OFFSET,
+			'timestamp'			=> null,
 			'action_key'		=> '',
 			'schedule_key'		=> '',
 			'callback'			=> null,
@@ -117,8 +118,17 @@ class Cron {
 	 */
 	private function schedule() {
 		if (!wp_next_scheduled($this->actionKey())) {
-			wp_schedule_event(time() + $this->config['seconds_offset'], $this->scheduleKey(), $this->actionKey());
+			wp_schedule_event($this->scheduleTimestamp(), $this->scheduleKey(), $this->actionKey());
 		}
+	}
+
+
+
+	/**
+	 * Returns the timestamp at which the event should be scheduled.
+	 */
+	private function scheduleTimestamp() {
+		return empty($this->config['timestamp']) ? time() + $this->config['seconds_offset'] : $this->config['timestamp'];
 	}
 
 
@@ -141,6 +151,30 @@ class Cron {
 	 */
 	private function actionKey() {
 		return Util::key($this->config['schedule_key']);
+	}
+
+
+
+	/**
+	 * Returns timestamp for the next scheduled time at a given hour and minute
+	 */
+	public static function dailyHour($hour, $minute = 0, $offset = null) {
+
+		$datetime = sprintf(
+			'%s %02d:%02d:00',
+			wp_date('Y-m-d'),
+			$hour,
+			$minute
+		);
+
+		$timestamp = strtotime($datetime) - (int) (get_option('gmt_offset') * HOUR_IN_SECONDS);
+
+		if ($timestamp < time()) {
+			$offset = $offset ?? self::SCHEDULE_OFFSET;
+			$timestamp  = $timestamp + $offset < time() ? strtotime('+1 day', $timestamp) : $timestamp + $offset;
+		}
+
+		return $timestamp;
 	}
 
 
