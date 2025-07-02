@@ -11,7 +11,7 @@ namespace MicroDeploy\Package\Helpers;
  *
  * @package		WordPress
  * @subpackage	Helpers
- * @version		1.0.0
+ * @version		1.0.1
  * @license		GPLv3
  * @author		Pau Iglesias
  * @link		https://github.com/pauiglesias/wp-helpers
@@ -23,14 +23,14 @@ class Ajax {
 	/**
 	 * Checking for a valid ajax nonce
 	 *
-	 * @param string		$param 	The POST param name to verify the nonce (will NOT be prefixed).
-	 * @param string|null	$seed	The optional seed that created the nonce (by default the project FILE constant).
+	 * @param string		$param 	Optional. The POST param name to verify the nonce (will NOT be prefixed). Default 'nonce'.
+	 * @param string|null	$seed	Optional. The optional seed that created the nonce (by default the project FILE constant). Defaults to Module::file().
 	 *
 	 * @return int|false	1 if the nonce is valid and generated between 0-12 hours ago,
 	 *						2 if the nonce is valid and generated between 12-24 hours ago.
 	 *						false if the nonce is invalid or the basis WP function is not available.
 	 */
-	public static function verifyNoncePosted($param, $seed = null) {
+	public static function verifyNoncePosted($param = 'nonce', $seed = null) {
 		return !empty($_POST[$param]) &&
 		 		function_exists('wp_verify_nonce') &&
 				wp_verify_nonce($_POST[$param], isset($seed) ? $seed : Module::file());
